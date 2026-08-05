@@ -1,0 +1,17 @@
+import pandas as pd
+
+# Read CSV file
+df = pd.read_csv(r"C:\Users\pbhav\Downloads\stock_data.csv")
+
+# Calculate Mean
+mean_price = df["ClosingPrice"].mean()
+
+# Calculate Standard Deviation
+std_price = df["ClosingPrice"].std()
+
+# Calculate Variance
+variance = df["ClosingPrice"].var()
+
+print("Mean Stock Price:", mean_price)
+print("Standard Deviation:", std_price)
+print("Variance:", variance)
