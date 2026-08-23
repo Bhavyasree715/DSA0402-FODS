@@ -1,0 +1,12 @@
+import pandas as pd
+from scipy.stats import t
+
+df = pd.read_csv("customer_reviews.csv")
+ratings = df["Rating"]
+
+mean = ratings.mean()
+se = ratings.std() / len(ratings) ** 0.5
+margin = t.ppf(0.975, len(ratings)-1) * se
+
+print("Mean Rating:", mean)
+print("95% CI:", mean-margin, mean+margin)
