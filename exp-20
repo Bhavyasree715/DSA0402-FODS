@@ -1,0 +1,16 @@
+import numpy as np
+from scipy.stats import ttest_ind
+
+A = [10,12,11,13,12,14,10,11]
+B = [15,16,14,17,15,16,18,15]
+
+t, p = ttest_ind(A, B)
+
+print("Mean A:", np.mean(A))
+print("Mean B:", np.mean(B))
+print("P-value:", p)
+
+if p < 0.05:
+    print("Significant difference")
+else:
+    print("No significant difference")
