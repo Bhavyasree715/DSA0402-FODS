@@ -1,0 +1,14 @@
+import numpy as np
+from scipy import stats
+
+drug = np.array([12,15,10,14,13,11,16,12,15,14])
+placebo = np.array([5,7,4,6,5,8,6,4,7,5])
+
+def ci(data):
+    mean = np.mean(data)
+    se = stats.sem(data)
+    margin = stats.t.ppf(0.975, len(data)-1) * se
+    return mean, mean-margin, mean+margin
+
+print("Drug:", ci(drug))
+print("Placebo:", ci(placebo))
