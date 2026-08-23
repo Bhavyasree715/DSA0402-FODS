@@ -1,0 +1,18 @@
+import numpy as np
+from scipy.stats import ttest_ind
+import matplotlib.pyplot as plt
+
+control = [70,72,75,71,73,74,76]
+treatment = [60,62,64,61,63,59,65]
+
+t, p = ttest_ind(control, treatment)
+
+print("P-value:", p)
+
+plt.boxplot([control, treatment], labels=["Control", "Treatment"])
+plt.show()
+
+if p < 0.05:
+    print("Treatment is statistically significant")
+else:
+    print("No significant effect")
