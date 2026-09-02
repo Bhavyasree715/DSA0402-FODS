@@ -1,0 +1,52 @@
+# Notebook Cell 90
+#creating the objects
+logreg_cv = LogisticRegression(random_state=0)
+dt_cv=DecisionTreeClassifier()
+knn_cv=KNeighborsClassifier()
+svc_cv=SVC()
+nb_cv=BernoulliNB()
+cv_dict = {0: 'Logistic Regression', 1: 'Decision Tree',2:'KNN',3:'SVC',4:'Naive Bayes'}
+cv_models=[logreg_cv,dt_cv,knn_cv,svc_cv,nb_cv]
+
+
+for i,model in enumerate(cv_models):
+    print("{} Test Accuracy: {}".format(cv_dict[i],cross_val_score(model, X, y, cv=10, scoring ='accuracy').mean()))
+# Notebook Cell 93
+param_grid = {'C': np.logspace(-4, 4, 50),
+             'penalty':['l1', 'l2']}
+clf = GridSearchCV(LogisticRegression(random_state=0), param_grid,cv=5, verbose=0,n_jobs=-1)
+best_model = clf.fit(X_train,y_train)
+print(best_model.best_estimator_)
+print("The mean accuracy of the model is:",best_model.score(X_test,y_test))
+# Notebook Cell 95
+logreg = LogisticRegression(C=0.18420699693267145, random_state=0)
+logreg.fit(X_train, y_train)
+y_pred = logreg.predict(X_test)
+print('Accuracy of logistic regression classifier on test set: {:.2f}'.format(logreg.score(X_test, y_test)))
+# Notebook Cell 97
+from sklearn.metrics import confusion_matrix
+confusion_matrix = confusion_matrix(y_test, y_pred)
+print("Confusion Matrix:\n",confusion_matrix)
+print("Classification Report:\n",classification_report(y_test, y_pred))
+# Notebook Cell 100
+from sklearn.metrics import roc_auc_score
+from sklearn.metrics import roc_curve
+logit_roc_auc = roc_auc_score(y_test, logreg.predict(X_test))
+fpr, tpr, thresholds = roc_curve(y_test, logreg.predict_proba(X_test)[:,1])
+plt.figure()
+plt.plot(fpr, tpr, label='Logistic Regression (area = %0.2f)' % logit_roc_auc)
+plt.plot([0, 1], [0, 1],'r--')
+plt.xlim([-0.01, 1.0])
+plt.ylim([0.0, 1.05])
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('Receiver operating characteristic')
+plt.legend(loc="lower right")
+plt.show()
+# Notebook Cell 103
+svc_classifier = SVC(random_state = 0)
+svc_classifier.fit(X_train,y_train)
+y_pred=svc_classifier.predict(X_test)
+
+print("Accuracy:",metrics.accuracy_score(y_test, y_pred))
+print("Classification Report:\n",classification_report(y_test,y_pred))
